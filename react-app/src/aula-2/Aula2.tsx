@@ -27,7 +27,7 @@ export class ClockToggle extends React.Component<
   handleClickIncrease() {
     this.setState({ ...this.state, interval: this.state.interval + 100 });
   }
-  
+
   render(): React.ReactNode {
     return (
       <div>
@@ -52,8 +52,12 @@ export class Clock extends React.Component<ClockProps, ClockState> {
       date: new Date(),
     };
   }
- 
-  componentDidUpdate() {
+
+  componentDidUpdate(prevProps: ClockProps) {
+    if(this.props.interval !== prevProps.interval) {
+      clearInterval(this.intervalId);
+      this.tick();
+    }
     console.log("componentDidUpdate");
   }
 
